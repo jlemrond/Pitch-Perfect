@@ -12,10 +12,11 @@ import AVFoundation
 class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
 
     @IBOutlet weak var recordingLabel: UILabel!
-    @IBOutlet weak var stopButton: UIButton!
-    @IBOutlet weak var recordButton: UIButton!
-    var audioRecorder:AVAudioRecorder!
-    var recordedAudio:RecordedAudio!
+    @IBOutlet weak var stopButton:     UIButton!
+    @IBOutlet weak var recordButton:   UIButton!
+    
+    var audioRecorder: AVAudioRecorder!
+    var recordedAudio: RecordedAudio!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +48,7 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         // Dispose of any resources that can be recreated.
     }
 
-
+    //Record audio.  Save to my_audio.wav.
     @IBAction func recordAudio(sender: UIButton) {
         print("Audio Record button engaged")
         recordingLabel.text = "Recording..."
@@ -73,6 +74,7 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         
     }
     
+    //Function called upon recording completion.  Performs seque and stores data to recordedAudio.
     func audioRecorderDidFinishRecording(recorder: AVAudioRecorder, successfully flag: Bool) {
         if(flag) {
             print("Audio Recording did finish successfully")
@@ -87,6 +89,7 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         }
     }
     
+    //Stores recordedAudio data in recievedAudio to transfer data to next playSoundsVC.
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "stopRecording") {
             let playSoundsVC: PlaySoundViewController = segue.destinationViewController as! PlaySoundViewController
@@ -95,6 +98,7 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         }
     }
     
+    //Stop Recorder.  Reset UI.
     @IBAction func stopButton(sender: UIButton) {
         audioRecorder.stop()
         let audioSession = AVAudioSession.sharedInstance()

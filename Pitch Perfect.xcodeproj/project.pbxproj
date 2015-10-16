@@ -15,7 +15,6 @@
 		8474CEF31BAA0F9100A03E32 /* Pitch_PerfectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8474CEF21BAA0F9100A03E32 /* Pitch_PerfectTests.swift */; };
 		849A4C191BB25A4400D469A8 /* PlaySoundViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849A4C181BB25A4400D469A8 /* PlaySoundViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		849A4C1B1BB2601100D469A8 /* movie_quote.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 849A4C1A1BB2601100D469A8 /* movie_quote.mp3 */; settings = {ASSET_TAGS = (); }; };
-		849A4C1D1BB2697700D469A8 /* Resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 849A4C1C1BB2697700D469A8 /* Resources.bundle */; settings = {ASSET_TAGS = (); }; };
 		849A4C1F1BB64A3C00D469A8 /* RecordedAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849A4C1E1BB64A3C00D469A8 /* RecordedAudio.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
@@ -42,7 +41,6 @@
 		8474CEF21BAA0F9100A03E32 /* Pitch_PerfectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pitch_PerfectTests.swift; sourceTree = "<group>"; };
 		849A4C181BB25A4400D469A8 /* PlaySoundViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaySoundViewController.swift; sourceTree = "<group>"; };
 		849A4C1A1BB2601100D469A8 /* movie_quote.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = movie_quote.mp3; path = "../../../iOS Development Course/movie_quote.mp3"; sourceTree = "<group>"; };
-		849A4C1C1BB2697700D469A8 /* Resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = Resources.bundle; path = ../../../../Desktop/Resources.bundle; sourceTree = "<group>"; };
 		849A4C1E1BB64A3C00D469A8 /* RecordedAudio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordedAudio.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -93,7 +91,6 @@
 				8474CEE31BAA0F9100A03E32 /* Images.xcassets */,
 				8474CEE51BAA0F9100A03E32 /* LaunchScreen.xib */,
 				849A4C1A1BB2601100D469A8 /* movie_quote.mp3 */,
-				849A4C1C1BB2697700D469A8 /* Resources.bundle */,
 				8474CEDA1BAA0F9100A03E32 /* Supporting Files */,
 			);
 			path = "Pitch Perfect";
@@ -206,7 +203,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				849A4C1D1BB2697700D469A8 /* Resources.bundle in Resources */,
 				8474CEE21BAA0F9100A03E32 /* Main.storyboard in Resources */,
 				8474CEE71BAA0F9100A03E32 /* LaunchScreen.xib in Resources */,
 				849A4C1B1BB2601100D469A8 /* movie_quote.mp3 in Resources */,
