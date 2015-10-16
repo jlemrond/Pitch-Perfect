@@ -179,9 +179,11 @@ class PlaySoundViewController: UIViewController, AVAudioPlayerDelegate {
     //Play sounds via Audio Engine.  Variable pitch and rate.
     func PlaySoundsWithVariables(pitch: Float, rate: Float) {
         
+        //Stop Audio Player if it still playing.
         audioPlayer.stop()
         audioPlayer.currentTime = 0
         
+        //Set up values for sliders.
         rateSlider.setValue(rate, animated: true)
         pitchSlider.setValue(pitch, animated: true)
         rateDisplay.text = String(NSString(format: "%.00f%%", rateSlider.value * 100))
@@ -189,39 +191,47 @@ class PlaySoundViewController: UIViewController, AVAudioPlayerDelegate {
         
         enableStopButton()
         
+        //Establish rate / pitch variables.
         let audioPlayerNode = AVAudioPlayerNode()
         let pitchEffect = AVAudioUnitTimePitch()
         pitchEffect.pitch = pitch
         pitchEffect.rate = rate
         
+        //Reset Audio Engine if running already.
         audioPlayerNode.stop()
         audioEngine.stop()
         audioEngine.reset()
         
+        //Attach Audio Node to audioEngine/pitchEffect
         audioEngine.attachNode(audioPlayerNode)
         audioEngine.attachNode(pitchEffect)
         
+        //Connect audioEngine to outputs/effects/
         audioEngine.connect(audioPlayerNode, to: pitchEffect, format: nil)
         audioEngine.connect(pitchEffect, to: audioEngine.outputNode, format: nil)
         
+        //Scheudle which file is to be played.  Start Engine/
         audioPlayerNode.scheduleFile(audioFile, atTime: nil, completionHandler: nil)
         try! audioEngine.start()
         print("Audio Engine started")
         
         audioPlayerNode.play()
         
+        //Utilize buffer to establish when audio has completed to reset UI.
         audioPlayerNode.scheduleBuffer(audioBuffer) { () -> Void in
-            let totalFrames: AVAudioTime = AVAudioTime(sampleTime: self.audioFile.length, atRate: self.audioFile.fileFormat.sampleRate)
+            //Establish total length of audioFile.
+            let sampleTime = self.audioFile.length
+            let sampleRate = self.audioFile.fileFormat.sampleRate
+            let totalFrames: AVAudioTime = AVAudioTime(sampleTime: sampleTime,
+                                                           atRate: sampleRate)
             
+            //If audio engine is active, get last rendered sample frame.
             if let nodeTime: AVAudioTime = audioPlayerNode.lastRenderTime {
                 let audioTime: AVAudioTime = audioPlayerNode.playerTimeForNodeTime(nodeTime)!
                 
+                //Reset UI if audio file has finished playing.
                 if audioTime.sampleTime >= totalFrames.sampleTime {
-                    dispatch_async(dispatch_get_main_queue()) {
-                        self.enablePlayButton()
-                        self.resetButtons(nil)
-                        
-                    }   // Dispatch...
+                    self.resetAllButtons()
                 }       // if audioTime.sampleTime...
             }           // if let nodeTime:...
         }               // audioPlayerNode.sche...
@@ -252,7 +262,11 @@ class PlaySoundViewController: UIViewController, AVAudioPlayerDelegate {
     //Function called when audio player finishes.
     func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
         if (flag) {
-            resetAllButtons()
+            if !audioPlayer.playing && !audioEngine.running {
+                resetAllButtons()
+            } else {
+                print("Reset UI not called, audio still playing")
+            }
         } else {
             print("Error with audio playback")
         }
@@ -260,15 +274,11 @@ class PlaySoundViewController: UIViewController, AVAudioPlayerDelegate {
     
     //Reset all UIButtons after audio has finished playing.
     func resetAllButtons() {
-        print("Reset Called")
-        if !audioPlayer.playing && !audioEngine.running {
-            //Dispatch used to reset UI otherwise UI does not refresh in time when method called.
-            dispatch_async(dispatch_get_main_queue()) {
-                self.enablePlayButton()
-                self.resetButtons(nil)
-            }
-        } else {
-            print("Reset UI not called, audio still playing")
+        print("Reset All Called.")
+        //Dispatch used to reset UI otherwise UI does not refresh in time when method called.
+        dispatch_async(dispatch_get_main_queue()) {
+            self.enablePlayButton()
+            self.resetButtons(nil)
         }
     }
     
