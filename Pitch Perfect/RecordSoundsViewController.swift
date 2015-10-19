@@ -79,7 +79,6 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         if(flag) {
             print("Audio Recording did finish successfully")
             recordedAudio = RecordedAudio(filePathURL: recorder.url, title: recorder.url.lastPathComponent!)
-            print("About to perform Seque")
             self.performSegueWithIdentifier("stopRecording", sender: recordedAudio)
             print("filePathURL:", recordedAudio.filePathURL, "\r\ntitle:", recordedAudio.title)
         } else {
@@ -111,5 +110,6 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         stopButton.hidden = true
         recordButton.enabled = true
     }
+    
 }
 
