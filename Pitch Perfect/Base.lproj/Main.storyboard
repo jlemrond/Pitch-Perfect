@@ -125,14 +125,14 @@
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <state key="normal" image="slowSpeed2"/>
                                 <connections>
-                                    <action selector="SlowButton:" destination="qQs-kh-k7c" eventType="touchUpInside" id="0su-az-NQc"/>
+                                    <action selector="slowButton:" destination="qQs-kh-k7c" eventType="touchUpInside" id="fex-Kg-QZ1"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w5V-2w-vdx">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <state key="normal" image="FastSpeed2"/>
                                 <connections>
-                                    <action selector="FastButton:" destination="qQs-kh-k7c" eventType="touchUpInside" id="mr9-dK-fpb"/>
+                                    <action selector="fastButton:" destination="qQs-kh-k7c" eventType="touchUpInside" id="5L2-br-rff"/>
                                 </connections>
                             </button>
                             <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BS4-Kt-sWB">
@@ -155,7 +155,7 @@
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <action selector="StopAudio:" destination="qQs-kh-k7c" eventType="touchUpInside" id="jGQ-Co-TxY"/>
+                                    <action selector="stopAudio:" destination="qQs-kh-k7c" eventType="touchUpInside" id="gum-sh-r97"/>
                                 </connections>
                             </button>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.5" maxValue="1.5" translatesAutoresizingMaskIntoConstraints="NO" id="IFv-Jn-GMd">
@@ -214,19 +214,22 @@
                                     <rect key="frame" x="323" y="289" width="42" height="21"/>
                                 </variation>
                             </label>
-                            <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7YR-6L-kHG">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <state key="normal" image="Play2"/>
-                                <connections>
-                                    <action selector="PlayAtRate:" destination="qQs-kh-k7c" eventType="touchUpInside" id="AFw-Sg-4RX"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P0s-0O-TG8">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" alpha="0.75" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7YR-6L-kHG">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" image="Play2"/>
+                                <variation key="widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="120" y="475" width="50" height="50"/>
+                                </variation>
+                                <connections>
+                                    <action selector="playAtRate:" destination="qQs-kh-k7c" eventType="touchUpInside" id="1Ob-xa-dH7"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -277,8 +280,8 @@
                                 <exclude reference="oVE-5m-RmR"/>
                                 <exclude reference="gyi-7T-LJK"/>
                                 <exclude reference="Qk4-3v-SPQ"/>
-                                <exclude reference="7YR-6L-kHG"/>
                                 <exclude reference="P0s-0O-TG8"/>
+                                <exclude reference="7YR-6L-kHG"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="WCa-7p-TvV"/>
@@ -329,8 +332,8 @@
                                 <include reference="oVE-5m-RmR"/>
                                 <include reference="gyi-7T-LJK"/>
                                 <include reference="Qk4-3v-SPQ"/>
-                                <include reference="7YR-6L-kHG"/>
                                 <include reference="P0s-0O-TG8"/>
+                                <include reference="7YR-6L-kHG"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="WCa-7p-TvV"/>
@@ -372,11 +375,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="iKW-00-vRg"/>
                     <connections>
-                        <outlet property="ChipButton" destination="AXv-H2-I7k" id="4xn-A5-dno"/>
-                        <outlet property="DarthButton" destination="Cwy-ab-YOs" id="Daz-eN-l3N"/>
-                        <outlet property="FastButton" destination="w5V-2w-vdx" id="2GW-iV-DTy"/>
                         <outlet property="RateLabel" destination="oVE-5m-RmR" id="oh0-Xu-dSX"/>
-                        <outlet property="SlowButton" destination="eGx-d6-1JT" id="oyf-pj-bBD"/>
+                        <outlet property="chipButton" destination="AXv-H2-I7k" id="7y2-cJ-pGd"/>
+                        <outlet property="darthButton" destination="Cwy-ab-YOs" id="T3J-1l-BlT"/>
+                        <outlet property="fastButton" destination="w5V-2w-vdx" id="qhV-Ad-8lF"/>
                         <outlet property="pitchDisplay" destination="Qk4-3v-SPQ" id="Uot-Nw-E9O"/>
                         <outlet property="pitchLabel" destination="P0s-0O-TG8" id="b4Z-gx-Vk7"/>
                         <outlet property="pitchSlider" destination="gyi-7T-LJK" id="Gyh-kz-7YV"/>
@@ -384,6 +386,7 @@
                         <outlet property="rateDisplay" destination="Ihh-EZ-G5S" id="eDv-7U-qeD"/>
                         <outlet property="rateLabel" destination="oVE-5m-RmR" id="ten-jN-6Si"/>
                         <outlet property="rateSlider" destination="IFv-Jn-GMd" id="i2d-Nh-iEa"/>
+                        <outlet property="slowButton" destination="eGx-d6-1JT" id="ddh-2U-73E"/>
                         <outlet property="stopButton" destination="BS4-Kt-sWB" id="ydP-W4-Mkg"/>
                     </connections>
                 </viewController>

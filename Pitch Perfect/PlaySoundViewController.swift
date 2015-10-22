@@ -14,10 +14,10 @@ class PlaySoundViewController: UIViewController, AVAudioPlayerDelegate {
     
     var recievedAudio: RecordedAudio!
     
-    @IBOutlet var SlowButton:  UIButton!
-    @IBOutlet var FastButton:  UIButton!
-    @IBOutlet var DarthButton: UIButton!
-    @IBOutlet var ChipButton:  UIButton!
+    @IBOutlet var slowButton:  UIButton!
+    @IBOutlet var fastButton:  UIButton!
+    @IBOutlet var darthButton: UIButton!
+    @IBOutlet var chipButton:  UIButton!
     var buttons: [UIButton]?
     var activeButton: UIButton?
     
@@ -71,15 +71,14 @@ class PlaySoundViewController: UIViewController, AVAudioPlayerDelegate {
         self.view.sendSubviewToBack(imgView)
         
         //Set images used for preset buttons.
-        ChipButton.setImage(UIImage(named: "Chipmunk2Active"), forState: .Selected)
-        DarthButton.setImage(UIImage(named: "DarthVader2Active"), forState: .Selected)
-        FastButton.setImage(UIImage(named: "FastSpeed2Active"), forState: .Selected)
-        SlowButton.setImage(UIImage(named: "SlowSpeed2Active"), forState: .Selected)
-        buttons = [ChipButton, FastButton, DarthButton, SlowButton]
+        chipButton.setImage(UIImage(named: "Chipmunk2Active"), forState: .Selected)
+        darthButton.setImage(UIImage(named: "DarthVader2Active"), forState: .Selected)
+        fastButton.setImage(UIImage(named: "FastSpeed2Active"), forState: .Selected)
+        slowButton.setImage(UIImage(named: "SlowSpeed2Active"), forState: .Selected)
+        buttons = [chipButton, fastButton, darthButton, slowButton]
         
         //Establish stop button as hidden/not enabled.
-        stopButton.hidden = true
-        stopButton.enabled = false
+        togglePlayButton(true)
         
         //Set up Rate/Pitch Labels.
         let labelColor: UIColor = UIColor(red: CGFloat(77/255.0), green: CGFloat(77/255.0), blue: CGFloat(77/255.0), alpha: 1.0)
@@ -131,29 +130,26 @@ class PlaySoundViewController: UIViewController, AVAudioPlayerDelegate {
     
     //Audio Buttons
 
-    @IBAction func SlowButton(sender: UIButton) {
+    @IBAction func slowButton(sender: UIButton) {
         print("Attempting Slow.")
         variableSpeed(0.5)
         resetAndPlayAudio(sender)
     }
 
-    @IBAction func FastButton(sender: UIButton) {
+    @IBAction func fastButton(sender: UIButton) {
         print("Attempting Fast.")
         variableSpeed(1.5)
         resetAndPlayAudio(sender)
     }
     
-    @IBAction func StopAudio(sender: UIButton) {
+    @IBAction func stopAudio(sender: UIButton) {
         print("Stop button engaged.")
-        audioPlayer.stop()
+        stopAudio()
         
-        audioEngine.stop()
-        audioEngine.reset()
-        
-        enablePlayButton()
+        togglePlayButton(true)
     }
     
-    @IBAction func PlayAtRate(sender: UIButton) {
+    @IBAction func playAtRate(sender: UIButton) {
         print("Attempting Cominbation.")
         PlaySoundsWithVariables(pitchSlider.value, rate: rateSlider.value)
     }
@@ -180,8 +176,7 @@ class PlaySoundViewController: UIViewController, AVAudioPlayerDelegate {
     func PlaySoundsWithVariables(pitch: Float, rate: Float) {
         
         //Stop Audio Player if it still playing.
-        audioPlayer.stop()
-        audioPlayer.currentTime = 0
+        stopAudio()
         
         //Set up values for sliders.
         rateSlider.setValue(rate, animated: true)
@@ -189,7 +184,7 @@ class PlaySoundViewController: UIViewController, AVAudioPlayerDelegate {
         rateDisplay.text = String(NSString(format: "%.00f%%", rateSlider.value * 100))
         pitchDisplay.text = String(NSString(format: "%.00f", pitchSlider.value / 100))
         
-        enableStopButton()
+        togglePlayButton(false)
         
         //Establish rate / pitch variables.
         let audioPlayerNode = AVAudioPlayerNode()
@@ -197,10 +192,8 @@ class PlaySoundViewController: UIViewController, AVAudioPlayerDelegate {
         pitchEffect.pitch = pitch
         pitchEffect.rate = rate
         
-        //Reset Audio Engine if running already.
+        //Reset PlayerNode if running already.
         audioPlayerNode.stop()
-        audioEngine.stop()
-        audioEngine.reset()
         
         //Attach Audio Node to audioEngine/pitchEffect
         audioEngine.attachNode(audioPlayerNode)
@@ -246,17 +239,23 @@ class PlaySoundViewController: UIViewController, AVAudioPlayerDelegate {
     
     //Used to stop all audio and play via AVAuidoPlayer.
     func resetAndPlayAudio(button: UIButton?) {
-        audioEngine.stop()
-        audioEngine.reset()
+        stopAudio()
         
         pitchSlider.setValue(0, animated: true)
         pitchDisplay.text = String(NSString(format: "%.00f", pitchSlider.value / 100))
-        audioPlayer.stop()
-        audioPlayer.currentTime = 0
         audioPlayer.play()
         
-        enableStopButton()
+        togglePlayButton(false)
         resetButtons(button)
+    }
+    
+    //Stops audio from both AVAudioPlayer and AVAudioEngine.
+    func stopAudio() {
+        audioEngine.stop()
+        audioEngine.reset()
+        
+        audioPlayer.stop()
+        audioPlayer.currentTime = 0
     }
     
     //Function called when audio player finishes.
@@ -277,7 +276,7 @@ class PlaySoundViewController: UIViewController, AVAudioPlayerDelegate {
         print("Reset All Called.")
         //Dispatch used to reset UI otherwise UI does not refresh in time when method called.
         dispatch_async(dispatch_get_main_queue()) {
-            self.enablePlayButton()
+            self.togglePlayButton(true)
             self.resetButtons(nil)
         }
     }
@@ -301,23 +300,13 @@ class PlaySoundViewController: UIViewController, AVAudioPlayerDelegate {
         }
     }
     
-    //Enable Play button, disable Stop Button.
-    func enablePlayButton() {
-        stopButton.hidden = true
-        stopButton.enabled = false
+    //Toggle Play and Stop Buttons.
+    func togglePlayButton(enable: Bool) {
+        stopButton.hidden = enable
+        stopButton.enabled = !enable
         
-        playButton.hidden = false
-        playButton.enabled = true
+        playButton.hidden = !enable
+        playButton.enabled = enable
     }
-    
-    //Enable Stop Button, disable Play button.
-    func enableStopButton() {
-        stopButton.hidden = false
-        stopButton.enabled = true
-        
-        playButton.hidden = true
-        playButton.enabled = false
-    }
-
 
 }
